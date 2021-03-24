@@ -1,0 +1,50 @@
+name: the_movie_db_flutter
+description: A new Flutter application.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cached_network_image: ^2.5.0
+  convex_bottom_bar: ^3.0.0
+  cupertino_icons: ^1.0.2
+  device_simulator: ^0.9.6
+  dio: ^3.0.10
+  equatable: ^2.0.0
+  flutter_bloc: ^6.1.2
+  flutter_i18n: ^0.21.1
+  flutter_svg: ^0.19.2
+  google_fonts: ^1.1.2
+  http: ^0.12.0+1
+  hydrated_bloc: ^6.1.0
+
+dependency_overrides:
+  intl: 0.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  image_path: assets/icons/app_icon.svg
+  android: false
+  ios: true
+
+flutter_native_splash:
+  image: assets/icons/app_icon.svg
+  color: "#FFFFFF"
+
+flutter:
+  assets:
+    - assets/flutter_i18n/
+    - assets/icons/
+
+  uses-material-design: true
+
