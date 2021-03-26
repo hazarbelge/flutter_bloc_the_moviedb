@@ -51,27 +51,30 @@ class _OverviewState extends State<Overview> {
             fontSize: 16.0,
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              flag = !flag;
-            });
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                flag ? context.translate("moviedb.details.more") : context.translate("moviedb.details.less"),
-                style: textTheme.bodyText2
-                    .copyWith(fontSize: 16.0, color: theme.accentColor),
-              ),
-              Icon(
-                Icons.keyboard_arrow_down,
-                size: 18.0,
-                color: theme.accentColor,
-              ),
-            ],
+        Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                flag = !flag;
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  flag ? context.translate("moviedb.details.more") : context.translate("moviedb.details.less"),
+                  style: textTheme.bodyText2
+                      .copyWith(fontSize: 16.0, color: theme.accentColor),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 18.0,
+                  color: theme.accentColor,
+                ),
+              ],
+            ),
           ),
         ),
       ],

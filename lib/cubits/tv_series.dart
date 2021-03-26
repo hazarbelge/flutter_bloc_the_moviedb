@@ -1,10 +1,10 @@
-import 'package:the_movie_db_flutter/models/index.dart';
-import 'package:the_movie_db_flutter/repositories/index.dart';
+import '../models/index.dart';
+import '../repositories/index.dart';
 import 'base/index.dart';
 
-class PopularMoviesCubit
-    extends RequestCubit<PopularMoviesRepository, MovieWrapper> {
-  PopularMoviesCubit(PopularMoviesRepository repository) : super(repository);
+class TvSeriesCubit
+    extends RequestCubit<TvSeriesRepository, Map<String, TvSeriesWrapper>> {
+  TvSeriesCubit(TvSeriesRepository repository) : super(repository);
 
   @override
   Future<void> loadData() async {

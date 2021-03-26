@@ -8,42 +8,55 @@ import 'package:the_movie_db_flutter/ui/pages/index.dart';
 class TopRatedMoviesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RequestBuilder<TopRatedMoviesCubit, MovieWrapper>(
+    return RequestBuilder<MoviesCubit, Map<String, MovieWrapper>>(
       onLoading: (context, state, value) => CustomProgressIndicator(),
-      onLoaded: (context, state, value) => Container(
-        child: Center(
-          child: ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            primary: false,
-            itemCount: value.results.length,
-            itemBuilder: (context, index) => GestureDetector(
-              child: CardListMovies(
-                image: 'https://image.tmdb.org/t/p/w185${value.results[index].posterPath}',
-                title: value.results[index].title,
-                vote: value.results[index].voteAverage,
-                releaseDate: value.results[index].releaseDate,
-                overview: value.results[index].overview,
-                genre: value.results[index].genreIds.take(3).map(createGenreContainer).toList(),
+      onLoaded: (context, state, value) {
+        var _topRated = value["top_rated"];
+        return Container(
+          child: Center(
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              primary: false,
+              itemCount: _topRated.results.length,
+              itemBuilder: (context, index) => GestureDetector(
+                child: CardListMovies(
+                  image:
+                  'https://image.tmdb.org/t/p/w185${_topRated.results[index].posterPath}',
+                  title: _topRated.results[index].title,
+                  vote: _topRated.results[index].voteAverage,
+                  releaseDate: _topRated.results[index].releaseDate,
+                  overview: _topRated.results[index].overview,
+                  genre: _topRated.results[index].genreIds
+                      .take(3)
+                      .map(createGenreContainer)
+                      .toList(),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DetailPage.route,
+                    arguments: {
+                      'title': _topRated.results[index].title,
+                      'imagePoster':
+                      'https://image.tmdb.org/t/p/w185${_topRated.results[index].posterPath}',
+                      'rating':
+                      double.parse(_topRated.results[index].voteAverage),
+                      'imageBanner':
+                      'https://image.tmdb.org/t/p/original${_topRated.results[index].backdropPath}',
+                      'genre': _topRated.results[index].genreIds
+                          .take(3)
+                          .map(createGenreContainer)
+                          .toList(),
+                      'overview': _topRated.results[index].overview,
+                    },
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  DetailPage.route,
-                  arguments: {
-                    'title': value.results[index].title,
-                    'imagePoster': 'https://image.tmdb.org/t/p/w185${value.results[index].posterPath}',
-                    'rating': double.parse(value.results[index].voteAverage),
-                    'imageBanner': 'https://image.tmdb.org/t/p/original${value.results[index].backdropPath}',
-                    'genre': value.results[index].genreIds.take(3).map(createGenreContainer).toList(),
-                    'overview': value.results[index].overview,
-                  },
-                );
-              },
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
