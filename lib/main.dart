@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'cubits/index.dart';
 import 'repositories/index.dart';
@@ -12,7 +14,11 @@ import 'util/index.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HydratedCubit.storage = await HydratedStorage.build();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getTemporaryDirectory(),
+  );
   Bloc.observer = CustomBlocObserver();
 
   final httpClient = Dio();
@@ -41,10 +47,8 @@ class MovieApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ThemeCubit()),
-        BlocProvider(
-            create: (_) => MoviesCubit(moviesRepository)),
-        BlocProvider(
-            create: (_) => TvSeriesCubit(tvSeriesRepository)),
+        BlocProvider(create: (_) => MoviesCubit(moviesRepository)),
+        BlocProvider(create: (_) => TvSeriesCubit(tvSeriesRepository)),
       ],
       child: BlocConsumer<ThemeCubit, ThemeState>(
         listener: (context, state) => null,
