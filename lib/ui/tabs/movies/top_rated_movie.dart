@@ -52,6 +52,8 @@ class TopRatedMoviesTab extends StatelessWidget {
                             .map(createGenreContainer)
                             .toList(),
                         'overview': _topRated.results[index].overview,
+                        'movieId': _topRated.results[index].id,
+                        'isMovie': true,
                       },
                     );
                   },

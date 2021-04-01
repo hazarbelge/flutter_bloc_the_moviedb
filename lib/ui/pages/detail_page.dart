@@ -10,8 +10,10 @@ class DetailPage extends StatelessWidget {
   final String imagePoster;
   final double rating;
   final String overview;
+  final int movieId;
+  final bool isMovie;
 
-  const DetailPage({Key key, this.genre, this.title, this.imageBanner, this.imagePoster, this.rating, this.overview}) : super(key: key);
+  const DetailPage({Key key, this.genre, this.title, this.imageBanner, this.imagePoster, this.rating, this.overview, this.movieId, this.isMovie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,8 @@ class DetailPage extends StatelessWidget {
                   imagePoster: imagePoster,
                   rating: rating,
                   genre: genre,
+                  movieId: movieId,
+                  isMovie: isMovie,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),

@@ -51,6 +51,8 @@ class OnTheAirTvSeriesTab extends StatelessWidget {
                             .map(createGenreContainer)
                             .toList(),
                         'overview': _onTheAir.results[index].overview,
+                        'movieId': _onTheAir.results[index].id,
+                        'isMovie': false,
                       },
                     );
                   },

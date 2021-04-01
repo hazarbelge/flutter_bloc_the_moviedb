@@ -55,7 +55,7 @@ class Movie extends Equatable {
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
-      popularity: json['popularity'],
+      popularity: json['popularity'] == null ? 0.0 : json['popularity'].toDouble(),
       voteCount: json['vote_count'],
       video: json['video'],
       posterPath: json['poster_path'],

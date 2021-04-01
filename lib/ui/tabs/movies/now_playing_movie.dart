@@ -51,6 +51,8 @@ class NowPlayingMoviesTab extends StatelessWidget {
                             .map(createGenreContainer)
                             .toList(),
                         'overview': _nowPlaying.results[index].overview,
+                        'movieId': _nowPlaying.results[index].id,
+                        'isMovie': true,
                       },
                     );
                   },

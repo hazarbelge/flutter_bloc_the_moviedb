@@ -20,4 +20,14 @@ class TvSeriesService extends BaseService<Dio> {
   Future<Response> getTopRatedTvSeries() async {
     return client.get(Url.topRatedTv);
   }
+
+  Future<Response> rateTv(int tvId, double rate) async {
+    client.options.headers["Content-Type"] = "application/json;charset=utf-8";
+    return client.post(
+        Url.rateTV(tvId),
+        data: {
+          "value": rate,
+        }
+    );
+  }
 }

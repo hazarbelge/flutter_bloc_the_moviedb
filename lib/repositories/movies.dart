@@ -20,4 +20,9 @@ class MoviesRepository
       "upcoming": MovieWrapper.fromJson(upcomingResponse.data)
     };
   }
+
+  Future<dynamic> rateMovie(int movieId, double rate) async {
+    final response = await service.rateMovie(movieId, rate);
+    return response.data;
+  }
 }

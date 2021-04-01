@@ -51,6 +51,8 @@ class AiringTodayTvSeriesTab extends StatelessWidget {
                             .map(createGenreContainer)
                             .toList(),
                         'overview': _airingToday.results[index].overview,
+                        'movieId': _airingToday.results[index].id,
+                        'isMovie': false,
                       },
                     );
                   },

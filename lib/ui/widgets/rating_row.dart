@@ -1,25 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:the_movie_db_flutter/cubits/index.dart';
 import 'package:the_movie_db_flutter/util/index.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RatingRow extends StatelessWidget {
+class RatingRow extends StatefulWidget {
   final double rating;
+  final int movieId;
+  final bool isMovie;
 
-  const RatingRow({Key key, this.rating}) : super(key: key);
+  const RatingRow({Key key, this.rating, this.movieId, this.isMovie})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-    var ratingCaptionStyle = textTheme.caption.copyWith(color: Colors.black45);
+  _RatingRowState createState() => _RatingRowState(rating, movieId, isMovie);
+}
+
+class _RatingRowState extends State<RatingRow> {
+  final double rating;
+  final int movieId;
+  final bool isMovie;
+
+  _RatingRowState(this.rating, this.movieId, this.isMovie);
+
+  bool isRated = false;
+  double rate = 0.5;
+  ThemeData theme;
+  TextTheme textTheme;
+  TextStyle ratingCaptionStyle;
+  Color color;
+
+  List<Widget> getStars() {
     var stars = <Widget>[];
     for (var i = 1; i <= 5; i++) {
-      var color = i <= rating ? theme.accentColor : Colors.black12;
-      var star = Icon(
-        Icons.star,
-        color: color,
+      color = !isRated
+          ? i * 2 <= rating
+              ? theme.accentColor
+              : Colors.black12
+          : i * 2 <= rate
+              ? Colors.orange
+              : Colors.black12;
+      var star = GestureDetector(
+        onTap: () {
+          setState(() {
+            isRated = true;
+            rate = (i * 2).toDouble();
+          });
+        },
+        child: Icon(
+          Icons.star,
+          color: color,
+        ),
       );
       stars.add(star);
     }
+    return stars;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    theme = Theme.of(context);
+    textTheme = theme.textTheme;
+    ratingCaptionStyle = textTheme.caption.copyWith(color: Colors.black45);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -47,12 +88,47 @@ class RatingRow extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(children: stars),
+            Row(
+              children: [
+                Row(
+                  children: getStars(),
+                ),
+                isRated
+                    ? SizedBox(
+                        height: 30,
+                        width: 50,
+                        child: TextButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateColor.resolveWith(
+                                  (states) => darkAccentColor)),
+                          onPressed: () {
+                            isMovie
+                                ? context
+                                    .read<MoviesCubit>()
+                                    .rateMovie(movieId, rate)
+                                : context
+                                    .read<TvSeriesCubit>()
+                                    .rateTv(movieId, rate);
+                          },
+                          child: Text(
+                            context.translate("moviedb.details.grade"),
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 4.0, left: 4.0),
-              child: Text(
-                context.translate("moviedb.details.grade"),
-                style: ratingCaptionStyle,
+              child: Row(
+                children: [
+                  Text(
+                    context.translate("moviedb.details.grade"),
+                    style: ratingCaptionStyle,
+                  ),
+                ],
               ),
             ),
           ],

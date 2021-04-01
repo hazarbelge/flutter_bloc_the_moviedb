@@ -20,4 +20,9 @@ class TvSeriesRepository
       "top_rated": TvSeriesWrapper.fromJson(topRatedResponse.data),
     };
   }
+
+  Future<dynamic> rateTv(int tvId, double rate) async {
+    final response = await service.rateTv(tvId, rate);
+    return response.data;
+  }
 }

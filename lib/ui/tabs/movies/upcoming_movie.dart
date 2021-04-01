@@ -51,6 +51,8 @@ class UpcomingMoviesTab extends StatelessWidget {
                             .map(createGenreContainer)
                             .toList(),
                         'overview': _upcoming.results[index].overview,
+                        'movieId': _upcoming.results[index].id,
+                        'isMovie': true,
                       },
                     );
                   },

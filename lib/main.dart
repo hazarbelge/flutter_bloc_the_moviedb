@@ -30,16 +30,21 @@ Future<void> main() async {
     tvSeriesRepository: TvSeriesRepository(
       TvSeriesService(httpClient),
     ),
+    sessionIdRepository: SessionIdRepository(
+      SessionIdService(httpClient),
+    ),
   ));
 }
 
 class MovieApp extends StatelessWidget {
   final MoviesRepository moviesRepository;
   final TvSeriesRepository tvSeriesRepository;
+  final SessionIdRepository sessionIdRepository;
 
   const MovieApp({
     this.moviesRepository,
     this.tvSeriesRepository,
+    this.sessionIdRepository,
   });
 
   @override
@@ -49,6 +54,7 @@ class MovieApp extends StatelessWidget {
         BlocProvider(create: (_) => ThemeCubit()),
         BlocProvider(create: (_) => MoviesCubit(moviesRepository)),
         BlocProvider(create: (_) => TvSeriesCubit(tvSeriesRepository)),
+        BlocProvider(create: (_) => SessionIdCubit(sessionIdRepository)),
       ],
       child: BlocConsumer<ThemeCubit, ThemeState>(
         listener: (context, state) => null,

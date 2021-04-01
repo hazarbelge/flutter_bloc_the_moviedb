@@ -51,6 +51,8 @@ class PopularMoviesTab extends StatelessWidget {
                             .map(createGenreContainer)
                             .toList(),
                         'overview': _popular.results[index].overview,
+                        'movieId': _popular.results[index].id,
+                        'isMovie': true,
                       },
                     );
                   },

@@ -8,15 +8,19 @@ class HeaderDetail extends StatelessWidget {
   final String imageBanner;
   final String imagePoster;
   final double rating;
+  final int movieId;
+  final bool isMovie;
 
-  const HeaderDetail(
-      {Key key,
-      this.genre,
-      this.title,
-      this.imageBanner,
-      this.imagePoster,
-      this.rating})
-      : super(key: key);
+  const HeaderDetail({
+    Key key,
+    this.genre,
+    this.title,
+    this.imageBanner,
+    this.imagePoster,
+    this.rating,
+    this.movieId,
+    this.isMovie,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +57,8 @@ class HeaderDetail extends StatelessWidget {
                     SizedBox(height: 8.0),
                     RatingRow(
                       rating: rating,
+                      movieId: movieId,
+                      isMovie: isMovie,
                     ),
                     SizedBox(height: 12.0),
                     Padding(

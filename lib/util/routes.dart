@@ -33,6 +33,8 @@ class Routes {
           final imageBanner = args['imageBanner'] as String;
           final genre = args['genre'] as List<Widget>;
           final overview = args['overview'] as String;
+          final movieId = args['movieId'] as int;
+          final isMovie = args['isMovie'] as bool;
 
           return MaterialPageRoute(
             settings: routeSettings,
@@ -43,6 +45,8 @@ class Routes {
               imageBanner: imageBanner,
               genre: genre,
               overview: overview,
+              movieId: movieId,
+              isMovie: isMovie,
             ),
           );
 
