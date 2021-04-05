@@ -1,4 +1,5 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:the_movie_db_flutter/ui/tabs/tv_series/index.dart';
@@ -64,7 +65,9 @@ class _HomeTvScreenState extends State<HomeTvScreen> {
                       ? Theme.of(context).textTheme.caption.color
                       : Colors.black26
                   : Theme.of(context).brightness == Brightness.light
-                      ? Colors.transparent
+                      ? kIsWeb
+                          ? Theme.of(context).textTheme.caption.color
+                          : Colors.transparent
                       : Theme.of(context).accentColor,
             ),
           ),
@@ -80,7 +83,9 @@ class _HomeTvScreenState extends State<HomeTvScreen> {
                       ? Theme.of(context).textTheme.caption.color
                       : Colors.black26
                   : Theme.of(context).brightness == Brightness.light
-                      ? Colors.transparent
+                      ? kIsWeb
+                          ? Theme.of(context).textTheme.caption.color
+                          : Colors.transparent
                       : Theme.of(context).accentColor,
             ),
           ),
@@ -96,7 +101,9 @@ class _HomeTvScreenState extends State<HomeTvScreen> {
                       ? Theme.of(context).textTheme.caption.color
                       : Colors.black26
                   : Theme.of(context).brightness == Brightness.light
-                      ? Colors.transparent
+                      ? kIsWeb
+                          ? Theme.of(context).textTheme.caption.color
+                          : Colors.transparent
                       : Theme.of(context).accentColor,
             ),
           ),
@@ -112,7 +119,9 @@ class _HomeTvScreenState extends State<HomeTvScreen> {
                       ? Theme.of(context).textTheme.caption.color
                       : Colors.black26
                   : Theme.of(context).brightness == Brightness.light
-                      ? Colors.transparent
+                      ? kIsWeb
+                          ? Theme.of(context).textTheme.caption.color
+                          : Colors.transparent
                       : Theme.of(context).accentColor,
             ),
           ),

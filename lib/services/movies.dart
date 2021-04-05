@@ -21,13 +21,16 @@ class MoviesService extends BaseService<Dio> {
     return client.get(Url.upcomingMovies);
   }
 
-  Future<Response> rateMovie(int movieId, double rate) async {
-    client.options.headers["Content-Type"] = "application/json;charset=utf-8";
-    return client.post(
-        Url.rateMovie(movieId),
-        data: {
-          "value": rate,
-        }
+  static Future<Response> rateMovie(int movieId, double rate) async {
+    Dio _client = Dio();
+    _client.options.headers["Content-Type"] = "application/json;charset=utf-8";
+    var response = await _client.post(
+      Url.rateMovie(movieId),
+      data: {
+        "value": rate,
+      },
     );
+    print(response.data);
+    return response;
   }
 }

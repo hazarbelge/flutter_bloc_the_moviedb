@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../models/index.dart';
 import '../repositories/index.dart';
 import 'base/index.dart';
@@ -18,15 +16,6 @@ class TvSeriesCubit
       emit(RequestState.loaded(data));
     } catch (e) {
       emit(RequestState.error(e.toString()));
-    }
-  }
-
-  Future<void> rateTv(int movieId, double rate) async {
-    try {
-      final data = await repository.rateTv(movieId, rate);
-      debugPrint(data.toString());
-    } catch (e) {
-      debugPrint(e.toString());
     }
   }
 }

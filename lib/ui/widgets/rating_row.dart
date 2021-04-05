@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db_flutter/cubits/index.dart';
+import 'package:the_movie_db_flutter/services/index.dart';
 import 'package:the_movie_db_flutter/util/index.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RatingRow extends StatefulWidget {
   final double rating;
@@ -103,12 +102,8 @@ class _RatingRowState extends State<RatingRow> {
                                   (states) => darkAccentColor)),
                           onPressed: () {
                             isMovie
-                                ? context
-                                    .read<MoviesCubit>()
-                                    .rateMovie(movieId, rate)
-                                : context
-                                    .read<TvSeriesCubit>()
-                                    .rateTv(movieId, rate);
+                                ? MoviesService.rateMovie(movieId, rate)
+                                : TvSeriesService.rateTv(movieId, rate);
                           },
                           child: Text(
                             context.translate("moviedb.details.grade"),

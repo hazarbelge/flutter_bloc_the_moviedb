@@ -17,7 +17,7 @@
         "title": "En Sevilen Filmler",
         "icon": "En Sevilen"
       },
-      "upcoming": {
+      "upcoming_movie": {
         "title": "Yakında Filmler",
         "icon": "Yakında"
       }
