@@ -8,6 +8,7 @@ import 'package:the_movie_db_flutter/ui/widgets/index.dart';
 class NowPlayingMoviesTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return RefreshIndicator(
       onRefresh: () => context.read<MoviesCubit>().loadData(),
       child: RequestBuilder<MoviesCubit, Map<String, MovieWrapper>>(
@@ -15,6 +16,8 @@ class NowPlayingMoviesTab extends StatelessWidget {
         onLoaded: (context, state, value) {
           var _nowPlaying = value["now_playing"];
           return Container(
+            height: size.height,
+            width: double.infinity,
             child: Center(
               child: ListView.builder(
                 padding: EdgeInsets.zero,
