@@ -30,20 +30,24 @@ class CardListMovies extends StatelessWidget {
       child: Card(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Spacer(),
             Container(
-              width: size.width * 0.35,
+              width: 150,
               height: 200,
-              child: CachedNetworkImage(
-                fit: BoxFit.fitHeight,
-                imageUrl: image,
-                errorWidget: (context, url, error) => Icon(Icons.error),
+              padding: const EdgeInsets.only(left: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: CachedNetworkImage(
+                  fit: BoxFit.fitWidth,
+                  imageUrl: image,
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
               ),
             ),
             Spacer(),
             Container(
-              width: size.width * 0.65 - 50,
+              width: size.width - 200,
               height: 200,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -135,6 +139,7 @@ class CardListMovies extends StatelessWidget {
                   SizedBox(height: 10),
                   Container(
                     width: size.width * 0.65 - 50,
+                    padding: const EdgeInsets.only(right: 15),
                     child: Text(
                       overview,
                       softWrap: true,
