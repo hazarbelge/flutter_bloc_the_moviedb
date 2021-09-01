@@ -1,6 +1,6 @@
 class Url {
   //API key
-  static const apiKey = '9c1cc02e925dc88e8866b2c222aa95f9';
+  static const apiKey = 'YOUR_API_KEY';
 
   //Base URLs
   static const movieDbBaseUrl = 'https://api.themoviedb.org/3';
