@@ -8,14 +8,14 @@ class TvSeriesCubit
 
   @override
   Future<void> loadData() async {
-    emit(RequestState.loading(state.value));
+    emit(RequestState<Map<String, TvSeriesWrapper>>.loading(state.value));
 
     try {
-      final data = await repository.fetchData();
+      final Map<String, TvSeriesWrapper> data = await repository.fetchData();
 
-      emit(RequestState.loaded(data));
+      emit(RequestState<Map<String, TvSeriesWrapper>>.loaded(data));
     } catch (e) {
-      emit(RequestState.error(e.toString()));
+      emit(RequestState<Map<String, TvSeriesWrapper>>.error(e.toString()));
     }
   }
 }

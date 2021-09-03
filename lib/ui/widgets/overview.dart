@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db_flutter/util/index.dart';
+
+import '../../util/index.dart';
 
 class Overview extends StatefulWidget {
+  const Overview({
+    Key? key,
+    required this.overview,
+  }) : super(key: key);
+
   final String overview;
 
-  Overview(this.overview);
-
   @override
-  _OverviewState createState() => _OverviewState(overview);
+  _OverviewState createState() => _OverviewState();
 }
 
 class _OverviewState extends State<Overview> {
-  final String overview;
-
-  _OverviewState(this.overview);
-
   bool flag = true;
-  String visibleText, invisibleText;
+  late String visibleText, invisibleText;
   int subLength = 100;
 
   @override
   void initState() {
-    if (overview.length > subLength) {
-      visibleText = overview.substring(0, subLength);
-      invisibleText = overview.substring(subLength, overview.length);
+    if (widget.overview.length > subLength) {
+      visibleText = widget.overview.substring(0, subLength);
+      invisibleText = widget.overview.substring(subLength, widget.overview.length);
     } else {
-      visibleText = overview;
+      visibleText = widget.overview;
       invisibleText = "";
     }
     super.initState();
@@ -33,20 +33,20 @@ class _OverviewState extends State<Overview> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var textTheme = Theme.of(context).textTheme;
+    final ThemeData theme = Theme.of(context);
+    final TextTheme textTheme = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
-          context.translate("moviedb.details.overview"),
-          style: textTheme.subtitle1.copyWith(fontSize: 18.0),
+          widget.overview,
+          style: textTheme.subtitle1!.copyWith(fontSize: 18.0),
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Text(
           flag ? "$visibleText..." : visibleText + invisibleText,
-          style: textTheme.bodyText2.copyWith(
+          style: textTheme.bodyText2!.copyWith(
             color: Colors.black45,
             fontSize: 16.0,
           ),
@@ -62,11 +62,10 @@ class _OverviewState extends State<Overview> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
+              children: <Widget>[
                 Text(
                   flag ? context.translate("moviedb.details.more") : context.translate("moviedb.details.less"),
-                  style: textTheme.bodyText2
-                      .copyWith(fontSize: 16.0, color: theme.accentColor),
+                  style: textTheme.bodyText2!.copyWith(fontSize: 16.0, color: theme.accentColor),
                 ),
                 Icon(
                   Icons.keyboard_arrow_down,

@@ -1,36 +1,37 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:the_movie_db_flutter/util/index.dart';
 import 'index.dart';
 
 class TvSeriesService extends BaseService<Dio> {
   const TvSeriesService(Dio client) : super(client);
 
-  Future<Response> getAiringTodayTvSeries() async {
+  Future<Response<dynamic>> getAiringTodayTvSeries() async {
     return client.get(Url.airingTodayTv);
   }
 
-  Future<Response> getOnTheAirTvSeries() async {
+  Future<Response<dynamic>> getOnTheAirTvSeries() async {
     return client.get(Url.onTheAirTv);
   }
 
-  Future<Response> getPopularTvSeries() async {
+  Future<Response<dynamic>> getPopularTvSeries() async {
     return client.get(Url.popularTv);
   }
 
-  Future<Response> getTopRatedTvSeries() async {
+  Future<Response<dynamic>> getTopRatedTvSeries() async {
     return client.get(Url.topRatedTv);
   }
 
-  static Future<Response> rateTv(int tvId, double rate) async {
-    Dio _client = Dio();
+  static Future<Response<dynamic>> rateTv(int tvId, double rate) async {
+    final Dio _client = Dio();
     _client.options.headers["Content-Type"] = "application/json;charset=utf-8";
-    var response = await _client.post(
+    final Response<dynamic> response = await _client.post(
       Url.rateTV(tvId),
-      data: {
+      data: <String, dynamic>{
         "value": rate,
       },
     );
-    print(response.data);
+    debugPrint(response.data);
     return response;
   }
 }

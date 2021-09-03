@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../models/index.dart';
 import '../services/index.dart';
 import 'index.dart';
@@ -8,7 +10,7 @@ class SessionIdRepository
 
   @override
   Future<SessionId> fetchData() async {
-    final requestTokenResponse = await service.getSessionId();
+    final Response<dynamic> requestTokenResponse = await service.getSessionId();
 
     return SessionId.fromJson(requestTokenResponse.data);
   }

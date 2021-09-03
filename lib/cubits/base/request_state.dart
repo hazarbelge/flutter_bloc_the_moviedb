@@ -5,32 +5,18 @@ enum RequestStatus { init, loading, loaded, error }
 
 @immutable
 class RequestState<T> extends Equatable {
-  final RequestStatus status;
-
-  final T value;
-
-  final String errorMessage;
-
   const RequestState._({
-    this.status,
+    required this.status,
     this.value,
     this.errorMessage,
   });
 
   factory RequestState.fromJson(Map<String, dynamic> json) {
-    return RequestState._(
+    return RequestState<T>._(
       status: RequestStatus.values[json['status']],
       value: json['value'],
       errorMessage: json['errorMessage'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'status': status.index,
-      'value': value,
-      'errorMessage': errorMessage,
-    };
   }
 
   const RequestState.init()
@@ -38,7 +24,7 @@ class RequestState<T> extends Equatable {
           status: RequestStatus.init,
         );
 
-  const RequestState.loading([T previousValue])
+  const RequestState.loading([T? previousValue])
       : this._(
           value: previousValue,
           status: RequestStatus.loading,
@@ -56,11 +42,23 @@ class RequestState<T> extends Equatable {
           errorMessage: error,
         );
 
+  final RequestStatus status;
+  final T? value;
+  final String? errorMessage;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'status': status.index,
+      'value': value,
+      'errorMessage': errorMessage,
+    };
+  }
+
   @override
-  List<Object> get props => [
+  List<Object> get props => <Object>[
         status.index,
         value.toString(),
-        errorMessage,
+        errorMessage.toString(),
       ];
 
   @override

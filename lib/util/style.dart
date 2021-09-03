@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'index.dart';
 
 class Style {
-  static final _pageTransitionsTheme = PageTransitionsTheme(
-    builders: const {
+  static const PageTransitionsTheme _pageTransitionsTheme = PageTransitionsTheme(
+    builders: <TargetPlatform, PageTransitionsBuilder>{
       TargetPlatform.android: ZoomPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
     },
@@ -56,7 +56,7 @@ class Style {
     popupMenuTheme: PopupMenuThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
-        side: BorderSide(color: darkDividerColor),
+        side: const BorderSide(color: darkDividerColor),
       ),
     ),
   );

@@ -8,14 +8,14 @@ class SessionIdCubit
 
   @override
   Future<void> loadData() async {
-    emit(RequestState.loading(state.value));
+    emit(RequestState<SessionId>.loading(state.value));
 
     try {
-      final data = await repository.fetchData();
+      final SessionId data = await repository.fetchData();
 
-      emit(RequestState.loaded(data));
+      emit(RequestState<SessionId>.loaded(data));
     } catch (e) {
-      emit(RequestState.error(e.toString()));
+      emit(RequestState<SessionId>.error(e.toString()));
     }
   }
 }

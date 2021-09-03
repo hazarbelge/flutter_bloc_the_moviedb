@@ -1,9 +1,9 @@
 import '../services/index.dart';
 
-abstract class BaseRepository<S extends BaseService, T> {
-  final S service;
+abstract class BaseRepository<S extends BaseService<dynamic>, T> {
+  const BaseRepository(this.service);
 
-  const BaseRepository(this.service) : assert(service != null);
+  final S service;
 
   Future<T> fetchData();
 }

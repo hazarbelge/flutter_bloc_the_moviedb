@@ -5,38 +5,37 @@ import 'package:the_movie_db_flutter/ui/screens/index.dart';
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     try {
-      final Map<String, dynamic> args = routeSettings.arguments;
-
       switch (routeSettings.name) {
         case StartScreen.route:
-          return MaterialPageRoute(
+          return MaterialPageRoute<dynamic>(
             settings: routeSettings,
-            builder: (_) => StartScreen(),
+            builder: (_) => const StartScreen(),
           );
 
         case HomeMovieScreen.route:
-          return MaterialPageRoute(
+          return MaterialPageRoute<dynamic>(
             settings: routeSettings,
-            builder: (_) => HomeMovieScreen(),
+            builder: (_) => const HomeMovieScreen(),
           );
 
         case HomeTvScreen.route:
-          return MaterialPageRoute(
+          return MaterialPageRoute<dynamic>(
             settings: routeSettings,
-            builder: (_) => HomeTvScreen(),
+            builder: (_) => const HomeTvScreen(),
           );
 
         case DetailPage.route:
-          final title = args['title'] as String;
-          final imagePoster = args['imagePoster'] as String;
-          final rating = args['rating'] as double;
-          final imageBanner = args['imageBanner'] as String;
-          final genre = args['genre'] as List<Widget>;
-          final overview = args['overview'] as String;
-          final movieId = args['movieId'] as int;
-          final isMovie = args['isMovie'] as bool;
+          final Map<String, dynamic> args = routeSettings.arguments! as Map<String, dynamic>;
+          final String title = args['title'] as String;
+          final String imagePoster = args['imagePoster'] as String;
+          final double rating = args['rating'] as double;
+          final String imageBanner = args['imageBanner'] as String;
+          final List<Widget> genre = args['genre'] as List<Widget>;
+          final String overview = args['overview'] as String;
+          final int movieId = args['movieId'] as int;
+          final bool isMovie = args['isMovie'] as bool;
 
-          return MaterialPageRoute(
+          return MaterialPageRoute<dynamic>(
             settings: routeSettings,
             builder: (_) => DetailPage(
               title: title,
@@ -59,9 +58,9 @@ class Routes {
   }
 
   static Route<dynamic> errorRoute(RouteSettings routeSettings) {
-    return MaterialPageRoute(
+    return MaterialPageRoute<dynamic>(
       settings: routeSettings,
-      builder: (_) => StartScreen(),
+      builder: (_) => const StartScreen(),
     );
   }
 }

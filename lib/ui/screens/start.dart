@@ -1,45 +1,48 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:the_movie_db_flutter/cubits/base/request_state.dart';
 import 'package:the_movie_db_flutter/cubits/session_id.dart';
 import 'package:the_movie_db_flutter/models/index.dart';
+import 'package:the_movie_db_flutter/repositories/index.dart';
 import 'package:the_movie_db_flutter/ui/screens/index.dart';
 import 'package:the_movie_db_flutter/ui/widgets/index.dart';
 import 'package:the_movie_db_flutter/util/index.dart';
 
 class StartScreen extends StatelessWidget {
-  static const route = '/';
+  const StartScreen({Key? key}) : super(key: key);
+
+  static const String route = '/';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: lightAccentColor,
-      body: RequestBuilder<SessionIdCubit, SessionId>(
-        onLoading: (context, state, value) => CustomProgressIndicator(),
-        onLoaded: (context, state, value) {
-          Url.sessionId = value.guestSessionId;
+      body: RequestBuilder<SessionIdCubit, SessionIdRepository, SessionId>(
+        onLoading: (BuildContext context, RequestState<SessionId> state, SessionId? value) => const CustomProgressIndicator(),
+        onLoaded: (BuildContext context, RequestState<SessionId> state, SessionId? value) {
+          Url.sessionId = value?.guestSessionId ?? "";
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children: <Widget>[
                 Container(
                   alignment: Alignment.center,
                   height: 300,
                   width: 250,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl: Url.appLogoUrl,
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                    children: <Widget>[
+                      Image.network(
+                        Url.appLogoUrl,
                       ),
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
                           context.translate('app.title'),
-                          style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                          style: const TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -52,14 +55,12 @@ class StartScreen extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         SizedBox(
                           height: 60,
                           width: 150,
                           child: TextButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateColor.resolveWith(
-                                    (states) => darkAccentColor)),
+                            style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) => darkAccentColor)),
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
@@ -70,22 +71,17 @@ class StartScreen extends StatelessWidget {
                               fit: BoxFit.scaleDown,
                               child: Text(
                                 context.translate("moviedb.movies.title"),
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white),
+                                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.normal, color: Colors.white),
                               ),
                             ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         SizedBox(
                           height: 60,
                           width: 150,
                           child: TextButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateColor.resolveWith(
-                                    (states) => darkAccentColor)),
+                            style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) => darkAccentColor)),
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
@@ -96,10 +92,7 @@ class StartScreen extends StatelessWidget {
                               fit: BoxFit.scaleDown,
                               child: Text(
                                 context.translate("moviedb.tv_series.title"),
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white),
+                                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.normal, color: Colors.white),
                               ),
                             ),
                           ),

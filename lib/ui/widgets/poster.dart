@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class Poster extends StatelessWidget {
-  static const POSTER_RATIO = 0.7;
-
-  Poster(
-    this.posterUrl, {
+  const Poster({
+    Key? key,
+    required this.posterUrl,
     this.height = 100.0,
-  });
+  }) : super(key: key);
+
+  static const double POSTER_RATIO = 0.7;
 
   final String posterUrl;
   final double height;
 
   @override
   Widget build(BuildContext context) {
-    var width = POSTER_RATIO * height;
+    final double width = POSTER_RATIO * height;
 
     return Material(
       borderRadius: BorderRadius.circular(4.0),

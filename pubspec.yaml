@@ -1,41 +1,42 @@
 name: the_movie_db_flutter
-description: A new Flutter application.
+description: A new Flutter TheMovieDB Application with BLoC State Management
 
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  convex_bottom_bar: ^3.0.0
+  cupertino_icons: ^1.0.3
+  dio: ^4.0.0
+  equatable: ^2.0.3
+
+  #flutter
   flutter:
     sdk: flutter
 
-  cached_network_image: ^3.0.0
-  convex_bottom_bar: ^3.0.0
-  cupertino_icons: ^1.0.3
-  device_simulator: ^0.9.6
-  dio: ^4.0.0
-  equatable: ^2.0.3
-  flutter_bloc: ^7.0.1
-  flutter_i18n: ^0.22.4
-  flutter_launcher_icons: ^0.9.0
-  flutter_native_splash: ^1.2.0
+  flutter_bloc: ^7.2.0
+  flutter_i18n: ^0.30.0
+  flutter_launcher_icons: ^0.9.2
+  flutter_native_splash: ^1.2.1
   flutter_svg: ^0.22.0
-  flutter_web_browser: ^0.14.0
+  flutter_web_browser: ^0.15.0
+
+  get: ^4.3.8
   google_fonts: ^2.1.0
   http: ^0.13.3
   hydrated_bloc: ^7.0.1
   path_provider: ^2.0.2
   url_launcher: ^6.0.3
 
-dependency_overrides:
-  args: ^2.1.1
-
 dev_dependencies:
+  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
+
 
 flutter_icons:
   android: true

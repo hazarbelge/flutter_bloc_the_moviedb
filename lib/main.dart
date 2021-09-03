@@ -13,62 +13,61 @@ import 'services/index.dart';
 import 'util/index.dart';
 
 Future<void> main() async {
+  debugPrint = (String? message, {int? wrapWidth}) {};
+
   WidgetsFlutterBinding.ensureInitialized();
+
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorage.webStorageDirectory
-        : await getTemporaryDirectory(),
+    storageDirectory: kIsWeb ? HydratedStorage.webStorageDirectory : await getTemporaryDirectory(),
   );
   Bloc.observer = CustomBlocObserver();
 
-  final httpClient = Dio();
+  final Dio httpClient = Dio();
 
-  runApp(MovieApp(
-    moviesRepository: MoviesRepository(
-      MoviesService(httpClient),
+  runApp(
+    MovieApp(
+      moviesRepository: MoviesRepository(MoviesService(httpClient)),
+      tvSeriesRepository: TvSeriesRepository(TvSeriesService(httpClient)),
+      sessionIdRepository: SessionIdRepository(SessionIdService(httpClient)),
     ),
-    tvSeriesRepository: TvSeriesRepository(
-      TvSeriesService(httpClient),
-    ),
-    sessionIdRepository: SessionIdRepository(
-      SessionIdService(httpClient),
-    ),
-  ));
+  );
 }
 
 class MovieApp extends StatelessWidget {
+  const MovieApp({
+    Key? key,
+    required this.moviesRepository,
+    required this.tvSeriesRepository,
+    required this.sessionIdRepository,
+  }) : super(key: key);
+
   final MoviesRepository moviesRepository;
   final TvSeriesRepository tvSeriesRepository;
   final SessionIdRepository sessionIdRepository;
 
-  const MovieApp({
-    this.moviesRepository,
-    this.tvSeriesRepository,
-    this.sessionIdRepository,
-  });
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => ThemeCubit()),
-        BlocProvider(create: (_) => MoviesCubit(moviesRepository)),
-        BlocProvider(create: (_) => TvSeriesCubit(tvSeriesRepository)),
-        BlocProvider(create: (_) => SessionIdCubit(sessionIdRepository)),
+      providers: <BlocProvider<dynamic>>[
+        BlocProvider<ThemeCubit>(create: (_) => ThemeCubit()),
+        BlocProvider<MoviesCubit>(create: (_) => MoviesCubit(moviesRepository)),
+        BlocProvider<TvSeriesCubit>(create: (_) => TvSeriesCubit(tvSeriesRepository)),
+        BlocProvider<SessionIdCubit>(create: (_) => SessionIdCubit(sessionIdRepository)),
       ],
       child: BlocConsumer<ThemeCubit, ThemeState>(
-        listener: (context, state) => null,
-        builder: (context, state) => MaterialApp(
+        listener: (BuildContext context, ThemeState state) {},
+        builder: (BuildContext context, ThemeState state) => MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter The Movie DB',
           theme: context.watch<ThemeCubit>().lightTheme,
           darkTheme: context.watch<ThemeCubit>().darkTheme,
           themeMode: context.watch<ThemeCubit>().themeMode,
           onGenerateRoute: Routes.generateRoute,
           onUnknownRoute: Routes.errorRoute,
-          localizationsDelegates: [
+          localizationsDelegates: <LocalizationsDelegate<dynamic>>[
             FlutterI18nDelegate(
               translationLoader: FileTranslationLoader(),
-            )..load(null),
+            )..load(const Locale('tr', 'TR')),
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate
           ],

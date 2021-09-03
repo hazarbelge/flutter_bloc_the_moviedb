@@ -8,14 +8,14 @@ class MoviesCubit
 
   @override
   Future<void> loadData() async {
-    emit(RequestState.loading(state.value));
+    emit(RequestState<Map<String,MovieWrapper>>.loading(state.value));
 
     try {
-      final data = await repository.fetchData();
+      final Map<String, MovieWrapper> data = await repository.fetchData();
 
-      emit(RequestState.loaded(data));
+      emit(RequestState<Map<String,MovieWrapper>>.loaded(data));
     } catch (e) {
-      emit(RequestState.error(e.toString()));
+      emit(RequestState<Map<String,MovieWrapper>>.error(e.toString()));
     }
   }
 }

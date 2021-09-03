@@ -2,20 +2,13 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class SessionId extends Equatable {
-  SessionId({
-    this.success,
-    this.guestSessionId,
-    this.expiresAt,
+  const SessionId({
+    required this.success,
+    required this.guestSessionId,
+    required this.expiresAt,
   });
 
-  final bool success;
-  final String guestSessionId;
-  final String expiresAt;
-
-  factory SessionId.fromRawJson(String str) =>
-      SessionId.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
+  factory SessionId.fromRawJson(String str) => SessionId.fromJson(json.decode(str));
 
   factory SessionId.fromJson(Map<String, dynamic> json) => SessionId(
         success: json["success"],
@@ -23,14 +16,20 @@ class SessionId extends Equatable {
         expiresAt: json["expires_at"],
       );
 
-  Map<String, dynamic> toJson() => {
+  final bool success;
+  final String guestSessionId;
+  final String expiresAt;
+
+  String toRawJson() => json.encode(toJson());
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "success": success,
         "guest_session_id": guestSessionId,
         "expires_at": expiresAt,
       };
 
   @override
-  List<Object> get props => [
+  List<Object> get props => <Object>[
         success,
         guestSessionId,
       ];

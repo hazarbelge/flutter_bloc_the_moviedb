@@ -1,8 +1,23 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:the_movie_db_flutter/util/index.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+
+import '../../cubits/index.dart';
+import '../../util/index.dart';
 
 class CardListTvSeries extends StatelessWidget {
+  const CardListTvSeries({
+    Key? key,
+    this.onTap,
+    required this.image,
+    required this.vote,
+    required this.title,
+    required this.releaseDate,
+    required this.genre,
+    required this.overview,
+  }) : super(key: key);
+
+  final VoidCallback? onTap;
   final String image;
   final String vote;
   final String title;
@@ -10,46 +25,107 @@ class CardListTvSeries extends StatelessWidget {
   final List<Widget> genre;
   final String overview;
 
-  const CardListTvSeries(
-      {Key key,
-      this.image,
-      this.vote,
-      this.title,
-      this.releaseDate,
-      this.genre,
-      this.overview})
-      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final double cardWidth = Get.context?.width ?? Get.width;
+    final double cardHeight = cardWidth / (1.75);
+    return AspectRatio(
+      aspectRatio: 1.75,
+      child: Container(
+        width: cardWidth,
+        padding: const EdgeInsets.all(10.0),
+        child: Card(
+          elevation: 5,
+          clipBehavior: Clip.hardEdge,
+          child: InkWell(
+            onTap: onTap,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                CardListTvImageSide(
+                  image: image,
+                  cardHeight: cardHeight,
+                ),
+                const SizedBox(width: 25),
+                CardListTvDescSide(
+                  cardWidth: cardWidth,
+                  cardHeight: cardHeight,
+                  vote: vote,
+                  title: title,
+                  releaseDate: releaseDate,
+                  genre: genre,
+                  overview: overview,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CardListTvImageSide extends StatelessWidget {
+  const CardListTvImageSide({
+    Key? key,
+    required this.image,
+    required this.cardHeight,
+  }) : super(key: key);
+
+  final String image;
+  final double cardHeight;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
-      width: size.width,
-      height: 250,
-      padding: const EdgeInsets.all(10.0),
-      child: Card(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              width: 150,
-              height: 200,
-              padding: const EdgeInsets.only(left: 15),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: CachedNetworkImage(
-                  fit: BoxFit.fitWidth,
-                  imageUrl: image,
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
-            ),
-            Spacer(),
-            Container(
-              width: size.width - 200,
-              height: 200,
+      height: cardHeight,
+      padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Image.network(
+          image,
+          fit: BoxFit.fill,
+          height: cardHeight - 20,
+        ),
+      ),
+    );
+  }
+}
+
+class CardListTvDescSide extends StatelessWidget {
+  const CardListTvDescSide({
+    Key? key,
+    required this.cardWidth,
+    required this.cardHeight,
+    required this.vote,
+    required this.title,
+    required this.releaseDate,
+    required this.genre,
+    required this.overview,
+  }) : super(key: key);
+
+  final double cardWidth;
+  final double cardHeight;
+  final String vote;
+  final String title;
+  final String releaseDate;
+  final List<Widget> genre;
+  final String overview;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isTablet = Get.context?.isTablet ?? (Get.width >= 600);
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 15, top: 10, bottom: 10),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints boxConstraints) {
+            return Container(
+              width: boxConstraints.maxWidth,
+              height: boxConstraints.maxHeight,
               clipBehavior: Clip.none,
+              decoration: const BoxDecoration(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,43 +135,47 @@ class CardListTvSeries extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        width: 40,
-                        height: 40,
+                      SizedBox(
+                        width: boxConstraints.maxHeight / 4.5,
+                        height: boxConstraints.maxHeight / 4.5,
                         child: Stack(
                           children: <Widget>[
                             Center(
                               child: Container(
-                                width: 40,
-                                height: 40,
+                                width: cardHeight / 4.5,
+                                height: cardHeight / 4.5,
                                 decoration: BoxDecoration(
-                                    color: Colors.blueGrey,
-                                    borderRadius: BorderRadius.circular(20)),
+                                  color: Colors.blueGrey,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                               ),
                             ),
                             Center(
-                              child: Container(
-                                width: 30,
-                                height: 30,
+                              child: SizedBox(
+                                width: cardHeight / 5,
+                                height: cardHeight / 5,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 3.0,
-                                  valueColor: AlwaysStoppedAnimation<Color>(GetRatingColor.getColor(double.parse(vote))),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    GetRatingColor.getColor(double.parse(vote)),
+                                  ),
                                   backgroundColor: Colors.grey,
                                   value: double.parse(vote) / 10.0,
                                 ),
                               ),
                             ),
                             Center(
-                              child: Container(
-                                width: 30,
-                                height: 30,
+                              child: SizedBox(
+                                width: cardHeight / 6,
+                                height: cardHeight / 6,
                                 child: Center(
                                   child: Text(
-                                    (double.parse(vote) * 10.0).floor().toString() + '%',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 11,
-                                        color: Colors.white),
+                                    '${(double.parse(vote) * 10.0).floor()}%',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 11,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -103,55 +183,85 @@ class CardListTvSeries extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const SizedBox(width: 10),
                       SizedBox(
-                        width: 10,
-                      ),
-                      Flexible(
+                        height: boxConstraints.maxHeight / 4.5,
+                        width: boxConstraints.maxWidth - boxConstraints.maxWidth / 4.5 - 10,
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              title,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 20),
+                            SizedBox(
+                              height: boxConstraints.maxHeight / 8,
+                              child: Text(
+                                title,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: isTablet ? 22 : 14),
+                                maxLines: 1,
+                              ),
                             ),
+                            const Spacer(),
                             Text(
                               releaseDate,
-                              style: TextStyle(
-                                  color: Colors.grey[800], fontSize: 14),
+                              style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.w300, fontSize: isTablet ? 14 : 11),
+                              maxLines: 1,
                             )
                           ],
                         ),
                       )
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                    width: size.width * 0.65 - 50,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: genre,
+                  if (isTablet) const SizedBox(height: 25) else const SizedBox(height: 10),
+                  Expanded(
+                    flex: 1,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      fit: StackFit.loose,
+                      children: <Widget>[
+                        Positioned(
+                          right: -15,
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            width: boxConstraints.maxWidth + 15,
+                            decoration: const BoxDecoration(),
+                            child: SingleChildScrollView(
+                              clipBehavior: Clip.none,
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: <Widget>[
+                                  ...genre,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (isTablet) const SizedBox(height: 25) else const SizedBox(height: 10),
+                  Expanded(
+                    flex: 3,
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        overview,
+                        maxLines: 6,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: context.watch<ThemeCubit>().themeMode == ThemeMode.dark ? Colors.white : Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: isTablet ? 16 : 12,
+                        ),
+                        textAlign: TextAlign.start,
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                    width: size.width * 0.65 - 50,
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Text(
-                      overview,
-                      softWrap: true,
-                      maxLines: 6,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+                  if (isTablet) const SizedBox(height: 10) else const SizedBox(height: 5),
                 ],
               ),
-            )
-          ],
+            );
+          },
         ),
       ),
     );

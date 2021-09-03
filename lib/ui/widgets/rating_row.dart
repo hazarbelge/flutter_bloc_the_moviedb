@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db_flutter/services/index.dart';
-import 'package:the_movie_db_flutter/util/index.dart';
+
+import '../../util/index.dart';
 
 class RatingRow extends StatefulWidget {
+  const RatingRow({
+    Key? key,
+    required this.rating,
+    required this.movieId,
+    required this.isMovie,
+  }) : super(key: key);
+
   final double rating;
   final int movieId;
   final bool isMovie;
 
-  const RatingRow({Key key, this.rating, this.movieId, this.isMovie})
-      : super(key: key);
-
   @override
-  _RatingRowState createState() => _RatingRowState(rating, movieId, isMovie);
+  _RatingRowState createState() => _RatingRowState();
 }
 
 class _RatingRowState extends State<RatingRow> {
-  final double rating;
-  final int movieId;
-  final bool isMovie;
-
-  _RatingRowState(this.rating, this.movieId, this.isMovie);
-
   bool isRated = false;
   double rate = 0.5;
-  ThemeData theme;
-  TextTheme textTheme;
-  TextStyle ratingCaptionStyle;
-  Color color;
+
+  late ThemeData theme;
+  late TextTheme textTheme;
+  late TextStyle ratingCaptionStyle;
+  late Color color;
 
   List<Widget> getStars() {
-    var stars = <Widget>[];
-    for (var i = 1; i <= 5; i++) {
+    final List<Widget> stars = <Widget>[];
+    for (int i = 1; i <= 5; i++) {
       color = !isRated
-          ? i * 2 <= rating
+          ? i * 2 <= widget.rating
               ? theme.accentColor
               : Colors.black12
           : i * 2 <= rate
               ? Colors.orange
               : Colors.black12;
-      var star = GestureDetector(
+      final GestureDetector star = GestureDetector(
         onTap: () {
           setState(() {
             isRated = true;
@@ -59,66 +58,63 @@ class _RatingRowState extends State<RatingRow> {
   Widget build(BuildContext context) {
     theme = Theme.of(context);
     textTheme = theme.textTheme;
-    ratingCaptionStyle = textTheme.caption.copyWith(color: Colors.black45);
+    ratingCaptionStyle = textTheme.caption!.copyWith(color: Colors.black45);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
+      children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: <Widget>[
             Text(
-              rating.toString(),
-              style: textTheme.headline6.copyWith(
+              widget.rating.toString(),
+              style: textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.w400,
                 color: theme.accentColor,
               ),
             ),
-            SizedBox(height: 4.0),
+            const SizedBox(height: 4.0),
             Text(
               context.translate("moviedb.details.rating"),
               style: ratingCaptionStyle,
             ),
           ],
         ),
-        SizedBox(width: 16.0),
+        const SizedBox(width: 16.0),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: <Widget>[
             Row(
-              children: [
+              children: <Widget>[
                 Row(
                   children: getStars(),
                 ),
-                isRated
-                    ? SizedBox(
-                        height: 30,
-                        width: 50,
-                        child: TextButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateColor.resolveWith(
-                                  (states) => darkAccentColor)),
-                          onPressed: () {
-                            isMovie
-                                ? MoviesService.rateMovie(movieId, rate)
-                                : TvSeriesService.rateTv(movieId, rate);
-                          },
-                          child: Text(
-                            context.translate("moviedb.details.grade"),
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      )
-                    : SizedBox(),
+                if (isRated)
+                  SizedBox(
+                    height: 30,
+                    width: 50,
+                    child: TextButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) => darkAccentColor)),
+                      onPressed: () {
+                        //widget.isMovie ? MoviesService.rateMovie(widget.movieId, rate) : TvSeriesService.rateTv(widget.movieId, rate);
+                      },
+                      child: Text(
+                        context.translate("moviedb.details.grade"),
+                        style: const TextStyle(color: Colors.white, fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+                else
+                  const SizedBox(),
               ],
             ),
             Padding(
               padding: const EdgeInsets.only(top: 4.0, left: 4.0),
               child: Row(
-                children: [
+                children: <Widget>[
                   Text(
                     context.translate("moviedb.details.grade"),
                     style: ratingCaptionStyle,

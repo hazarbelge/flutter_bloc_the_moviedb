@@ -5,7 +5,7 @@ import '../util/index.dart';
 
 enum ThemeState { light, dark, black, system }
 
-final Map<ThemeState, ThemeData> _themeData = {
+final Map<ThemeState, ThemeData> _themeData = <ThemeState, ThemeData>{
   ThemeState.light: Style.light,
   ThemeState.dark: Style.dark,
   ThemeState.black: Style.black,
@@ -13,9 +13,9 @@ final Map<ThemeState, ThemeData> _themeData = {
 
 /// Saves and loads information regarding the theme setting.
 class ThemeCubit extends HydratedCubit<ThemeState> {
-  static const defaultTheme = ThemeState.system;
-
   ThemeCubit() : super(defaultTheme);
+
+  static const ThemeState defaultTheme = ThemeState.system;
 
   @override
   ThemeState fromJson(Map<String, dynamic> json) {
@@ -24,7 +24,7 @@ class ThemeCubit extends HydratedCubit<ThemeState> {
 
   @override
   Map<String, int> toJson(ThemeState state) {
-    return {
+    return <String, int>{
       'value': state.index,
     };
   }
@@ -39,18 +39,19 @@ class ThemeCubit extends HydratedCubit<ThemeState> {
       case ThemeState.light:
         return ThemeMode.light;
       case ThemeState.dark:
+        return ThemeMode.dark;
       case ThemeState.black:
         return ThemeMode.dark;
       default:
-        return ThemeMode.system;
+        return ThemeMode.dark;
     }
   }
 
   /// Default light theme
-  ThemeData get lightTheme => _themeData[ThemeState.light];
+  ThemeData? get lightTheme => _themeData[ThemeState.light];
 
   /// Default dark theme
-  ThemeData get darkTheme => state == ThemeState.black
+  ThemeData? get darkTheme => state == ThemeState.black
       ? _themeData[ThemeState.black]
       : _themeData[ThemeState.dark];
 }

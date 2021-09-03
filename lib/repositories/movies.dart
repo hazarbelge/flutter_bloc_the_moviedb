@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../models/index.dart';
 import '../services/index.dart';
 import 'index.dart';
@@ -8,12 +10,12 @@ class MoviesRepository
 
   @override
   Future<Map<String,MovieWrapper>> fetchData() async {
-    final nowPlayingResponse = await service.getNowPlayingMovies();
-    final popularResponse = await service.getPopularMovies();
-    final topRatedResponse = await service.getTopRatedMovies();
-    final upcomingResponse = await service.getUpcomingMovies();
+    final Response<dynamic> nowPlayingResponse = await service.getNowPlayingMovies();
+    final Response<dynamic> popularResponse = await service.getPopularMovies();
+    final Response<dynamic> topRatedResponse = await service.getTopRatedMovies();
+    final Response<dynamic> upcomingResponse = await service.getUpcomingMovies();
 
-    return {
+    return <String, MovieWrapper>{
       "now_playing": MovieWrapper.fromJson(nowPlayingResponse.data),
       "popular": MovieWrapper.fromJson(popularResponse.data),
       "top_rated": MovieWrapper.fromJson(topRatedResponse.data),

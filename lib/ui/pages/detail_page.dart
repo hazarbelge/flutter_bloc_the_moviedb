@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:the_movie_db_flutter/cubits/index.dart';
 import 'package:the_movie_db_flutter/ui/widgets/index.dart';
 
 class DetailPage extends StatelessWidget {
-  static const route = '/movie_detail';
+  const DetailPage({
+    Key? key,
+    required this.genre,
+    required this.title,
+    required this.imageBanner,
+    required this.imagePoster,
+    required this.rating,
+    required this.overview,
+    required this.movieId,
+    required this.isMovie,
+  }) : super(key: key);
+
+  static const String route = '/detail';
 
   final List<Widget> genre;
   final String title;
@@ -13,17 +27,15 @@ class DetailPage extends StatelessWidget {
   final int movieId;
   final bool isMovie;
 
-  const DetailPage({Key key, this.genre, this.title, this.imageBanner, this.imagePoster, this.rating, this.overview, this.movieId, this.isMovie}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.watch<ThemeCubit>().themeMode == ThemeMode.light ? Colors.white : Colors.black,
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
             Column(
-              children: [
+              children: <Widget>[
                 HeaderDetail(
                   title: title,
                   imageBanner: imageBanner,
@@ -35,20 +47,19 @@ class DetailPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Overview(overview),
+                  child: Overview(overview: overview),
                 ),
-                SizedBox(height: 50.0),
+                const SizedBox(height: 50.0),
               ],
             ),
             Positioned(
               top: 20,
               left: 5,
-              child: IconButton(icon: Icon(Icons.arrow_back, size: 36), onPressed: () => Navigator.pop(context)),
+              child: IconButton(icon: const Icon(Icons.arrow_back, size: 36), onPressed: () => Navigator.pop(context)),
             ),
           ],
-        )
+        ),
       ),
     );
   }
-
 }
