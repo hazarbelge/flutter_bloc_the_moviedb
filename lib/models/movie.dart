@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:equatable/equatable.dart';
-
 class MovieWrapper {
-  MovieWrapper({
+  const MovieWrapper({
     required this.page,
     required this.totalResults,
     required this.totalPages,
@@ -12,7 +10,7 @@ class MovieWrapper {
 
   factory MovieWrapper.fromRawJson(String str) => MovieWrapper.fromJson(json.decode(str));
 
-  factory MovieWrapper.fromJson(Map<String, dynamic> json) {
+  factory MovieWrapper.fromJson(Map<String?, dynamic> json) {
     return MovieWrapper(
       page: json['page'],
       totalResults: json['total_results'],
@@ -21,13 +19,13 @@ class MovieWrapper {
     );
   }
 
-  int page;
-  int totalResults;
-  int totalPages;
-  List<Movie>? results;
+  final int page;
+  final int totalResults;
+  final int totalPages;
+  final List<Movie>? results;
 }
 
-class Movie extends Equatable {
+class Movie {
   const Movie({
     required this.popularity,
     required this.voteCount,
@@ -45,7 +43,7 @@ class Movie extends Equatable {
     required this.releaseDate,
   });
 
-  factory Movie.fromJson(Map<String, dynamic> json) {
+  factory Movie.fromJson(Map<String?, dynamic> json) {
     return Movie(
       popularity: json['popularity'] == null ? 0.0 : json['popularity'].toDouble(),
       voteCount: json['vote_count'],
@@ -67,17 +65,17 @@ class Movie extends Equatable {
   final double popularity;
   final int voteCount;
   final bool video;
-  final String posterPath;
+  final String? posterPath;
   final int id;
   final bool adult;
-  final String backdropPath;
-  final String originalLanguage;
-  final String originalTitle;
+  final String? backdropPath;
+  final String? originalLanguage;
+  final String? originalTitle;
   final List<int> genreIds;
-  final String title;
-  final String voteAverage;
-  final String overview;
-  final String releaseDate;
+  final String? title;
+  final String? voteAverage;
+  final String? overview;
+  final String? releaseDate;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         "poster_path": posterPath,
@@ -95,22 +93,4 @@ class Movie extends Equatable {
         "video": video,
         "vote_average": voteAverage,
       };
-
-  @override
-  List<Object> get props => <Object>[
-        popularity,
-        voteCount,
-        video,
-        posterPath,
-        id,
-        adult,
-        backdropPath,
-        originalLanguage,
-        originalTitle,
-        genreIds,
-        title,
-        voteAverage,
-        overview,
-        releaseDate,
-      ];
 }

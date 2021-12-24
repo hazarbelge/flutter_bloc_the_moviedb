@@ -40,14 +40,8 @@ class _OverviewState extends State<Overview> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          widget.overview,
-          style: textTheme.subtitle1!.copyWith(fontSize: 18.0),
-        ),
-        const SizedBox(height: 8.0),
-        Text(
           flag ? "$visibleText..." : visibleText + invisibleText,
           style: textTheme.bodyText2!.copyWith(
-            color: Colors.black45,
             fontSize: 16.0,
           ),
         ),
@@ -65,12 +59,12 @@ class _OverviewState extends State<Overview> {
               children: <Widget>[
                 Text(
                   flag ? context.translate("moviedb.details.more") : context.translate("moviedb.details.less"),
-                  style: textTheme.bodyText2!.copyWith(fontSize: 16.0, color: theme.accentColor),
+                  style: textTheme.bodyText2!.copyWith(fontSize: 16.0, color: theme.colorScheme.secondary),
                 ),
                 Icon(
                   Icons.keyboard_arrow_down,
                   size: 18.0,
-                  color: theme.accentColor,
+                  color: theme.colorScheme.secondary,
                 ),
               ],
             ),

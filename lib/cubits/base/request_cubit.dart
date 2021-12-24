@@ -14,5 +14,17 @@ abstract class RequestCubit<R extends BaseRepository<BaseService<dynamic>, dynam
   final R repository;
   final bool autoLoad;
 
-  Future<void> loadData();
+  Future<T?> loadData() async {
+    emit(RequestState<T>.loading(state.value));
+
+    try {
+      final T data = await repository.fetchData();
+
+      emit(RequestState<T>.loaded(data));
+      return data;
+    } catch (e) {
+      emit(RequestState<T>.error(e.toString()));
+    }
+    return null;
+  }
 }

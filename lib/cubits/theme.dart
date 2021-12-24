@@ -31,7 +31,7 @@ class ThemeCubit extends HydratedCubit<ThemeState> {
 
   ThemeState get theme => state;
 
-  set theme(ThemeState themeState) => emit(themeState);
+  set themeSet(ThemeState themeState) => emit(themeState);
 
   /// Returns appropiate theme mode
   ThemeMode get themeMode {
@@ -51,7 +51,5 @@ class ThemeCubit extends HydratedCubit<ThemeState> {
   ThemeData? get lightTheme => _themeData[ThemeState.light];
 
   /// Default dark theme
-  ThemeData? get darkTheme => state == ThemeState.black
-      ? _themeData[ThemeState.black]
-      : _themeData[ThemeState.dark];
+  ThemeData? get darkTheme => state == ThemeState.black ? _themeData[ThemeState.black] : _themeData[ThemeState.dark];
 }

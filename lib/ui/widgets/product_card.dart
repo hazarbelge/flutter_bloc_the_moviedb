@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:the_movie_db_flutter/util/index.dart';
 
-import '../../cubits/index.dart';
-import '../../util/index.dart';
-
-class CardListTvSeries extends StatelessWidget {
-  const CardListTvSeries({
+class ProductCard extends StatelessWidget {
+  const ProductCard({
     Key? key,
     this.onTap,
     required this.image,
@@ -15,6 +12,7 @@ class CardListTvSeries extends StatelessWidget {
     required this.releaseDate,
     required this.genre,
     required this.overview,
+    required this.aspectRatio,
   }) : super(key: key);
 
   final VoidCallback? onTap;
@@ -24,13 +22,16 @@ class CardListTvSeries extends StatelessWidget {
   final String releaseDate;
   final List<Widget> genre;
   final String overview;
+  final double aspectRatio;
 
   @override
   Widget build(BuildContext context) {
-    final double cardWidth = Get.context?.width ?? Get.width;
-    final double cardHeight = cardWidth / (1.75);
+    final double width = MediaQuery.of(context).size.width;
+
+    final double cardWidth = width;
+    final double cardHeight = cardWidth / aspectRatio;
     return AspectRatio(
-      aspectRatio: 1.75,
+      aspectRatio: aspectRatio,
       child: Container(
         width: cardWidth,
         padding: const EdgeInsets.all(10.0),
@@ -43,12 +44,12 @@ class CardListTvSeries extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                CardListTvImageSide(
+                CardListMovieImageSide(
                   image: image,
                   cardHeight: cardHeight,
                 ),
                 const SizedBox(width: 25),
-                CardListTvDescSide(
+                CardListMovieDescSide(
                   cardWidth: cardWidth,
                   cardHeight: cardHeight,
                   vote: vote,
@@ -66,8 +67,8 @@ class CardListTvSeries extends StatelessWidget {
   }
 }
 
-class CardListTvImageSide extends StatelessWidget {
-  const CardListTvImageSide({
+class CardListMovieImageSide extends StatelessWidget {
+  const CardListMovieImageSide({
     Key? key,
     required this.image,
     required this.cardHeight,
@@ -87,14 +88,17 @@ class CardListTvImageSide extends StatelessWidget {
           image,
           fit: BoxFit.fill,
           height: cardHeight - 20,
+          errorBuilder: (BuildContext context, Object object, StackTrace? stackTrace) {
+            return const SizedBox();
+          },
         ),
       ),
     );
   }
 }
 
-class CardListTvDescSide extends StatelessWidget {
-  const CardListTvDescSide({
+class CardListMovieDescSide extends StatelessWidget {
+  const CardListMovieDescSide({
     Key? key,
     required this.cardWidth,
     required this.cardHeight,
@@ -115,7 +119,6 @@ class CardListTvDescSide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isTablet = Get.context?.isTablet ?? (Get.width >= 600);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(right: 15, top: 10, bottom: 10),
@@ -127,9 +130,9 @@ class CardListTvDescSide extends StatelessWidget {
               clipBehavior: Clip.none,
               decoration: const BoxDecoration(),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  const Spacer(),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,7 +149,7 @@ class CardListTvDescSide extends StatelessWidget {
                                 height: cardHeight / 4.5,
                                 decoration: BoxDecoration(
                                   color: Colors.blueGrey,
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(90),
                                 ),
                               ),
                             ),
@@ -171,15 +174,15 @@ class CardListTvDescSide extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     '${(double.parse(vote) * 10.0).floor()}%',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 11,
+                                      fontSize: 11.sp,
                                       color: Colors.white,
                                     ),
                                   ),
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -193,26 +196,32 @@ class CardListTvDescSide extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(
-                              height: boxConstraints.maxHeight / 8,
+                              height: boxConstraints.maxHeight / 9,
                               child: Text(
                                 title,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: isTablet ? 22 : 14),
+                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.sp),
                                 maxLines: 1,
                               ),
                             ),
                             const Spacer(),
-                            Text(
-                              releaseDate,
-                              style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.w300, fontSize: isTablet ? 14 : 11),
-                              maxLines: 1,
+                            SizedBox(
+                              height: boxConstraints.maxHeight / 12,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  releaseDate,
+                                  style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.w300, fontSize: 11.sp),
+                                  maxLines: 1,
+                                ),
+                              ),
                             )
                           ],
                         ),
                       )
                     ],
                   ),
-                  if (isTablet) const SizedBox(height: 25) else const SizedBox(height: 10),
+                  const Spacer(flex: 2),
                   Expanded(
                     flex: 1,
                     child: Stack(
@@ -239,25 +248,28 @@ class CardListTvDescSide extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (isTablet) const SizedBox(height: 25) else const SizedBox(height: 10),
+                  const Spacer(flex: 2),
                   Expanded(
                     flex: 3,
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        overview,
-                        maxLines: 6,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: context.watch<ThemeCubit>().themeMode == ThemeMode.dark ? Colors.white : Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: isTablet ? 16 : 12,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints boxConstraints) {
+                        return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            overview,
+                            maxLines: boxConstraints.maxHeight ~/ 14,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 11.sp,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  if (isTablet) const SizedBox(height: 10) else const SizedBox(height: 5),
+                  const Spacer(),
                 ],
               ),
             );

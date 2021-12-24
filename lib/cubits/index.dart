@@ -1,3 +1,4 @@
+export 'base/index.dart';
 export 'movies.dart';
 export 'session_id.dart';
 export 'theme.dart';

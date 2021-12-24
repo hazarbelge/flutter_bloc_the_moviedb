@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:the_movie_db_flutter/cubits/base/index.dart';
 import 'package:the_movie_db_flutter/cubits/index.dart';
 import 'package:the_movie_db_flutter/models/index.dart';
 import 'package:the_movie_db_flutter/repositories/index.dart';
-import 'package:the_movie_db_flutter/ui/pages/index.dart';
 import 'package:the_movie_db_flutter/ui/widgets/index.dart';
 
 class UpcomingMoviesTab extends StatelessWidget {
@@ -20,35 +17,19 @@ class UpcomingMoviesTab extends StatelessWidget {
         onLoaded: (BuildContext context, RequestState<Map<String, MovieWrapper>> state, Map<String, MovieWrapper>? value) {
           final MovieWrapper _upcoming = value!["upcoming"]!;
           return SizedBox(
-            height: Get.context?.height ?? Get.height,
+            height: double.infinity,
             width: double.infinity,
             child: Center(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                primary: false,
-                itemCount: _upcoming.results!.length,
-                itemExtent: Get.context?.width ?? Get.width / 1.75,
-                itemBuilder: (BuildContext context, int index) => CardListMovies(
-                  image: 'https://image.tmdb.org/t/p/w185${_upcoming.results![index].posterPath}',
-                  title: _upcoming.results![index].title,
-                  vote: _upcoming.results![index].voteAverage,
-                  releaseDate: _upcoming.results![index].releaseDate,
-                  overview: _upcoming.results![index].overview,
-                  genre: _upcoming.results![index].genreIds.take(3).map(createGenreContainer).toList(),
-                  onTap: () => Get.toNamed(
-                    DetailPage.route,
-                    arguments: <String, dynamic>{
-                      'title': _upcoming.results![index].title,
-                      'imagePoster': 'https://image.tmdb.org/t/p/w185${_upcoming.results![index].posterPath}',
-                      'rating': double.parse(_upcoming.results![index].voteAverage),
-                      'imageBanner': 'https://image.tmdb.org/t/p/original${_upcoming.results![index].backdropPath}',
-                      'genre': _upcoming.results![index].genreIds.take(3).map(createGenreContainer).toList(),
-                      'overview': _upcoming.results![index].overview,
-                      'movieId': _upcoming.results![index].id,
-                      'isMovie': true,
-                    },
-                  ),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    ProductList(
+                      productList: _upcoming.results,
+                      isMovie: true,
+                    ),
+                  ],
                 ),
               ),
             ),

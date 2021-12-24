@@ -32,7 +32,7 @@ class _RatingRowState extends State<RatingRow> {
     for (int i = 1; i <= 5; i++) {
       color = !isRated
           ? i * 2 <= widget.rating
-              ? theme.accentColor
+              ? theme.colorScheme.secondary
               : Colors.black12
           : i * 2 <= rate
               ? Colors.orange
@@ -71,7 +71,7 @@ class _RatingRowState extends State<RatingRow> {
               widget.rating.toString(),
               style: textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.w400,
-                color: theme.accentColor,
+                color: theme.colorScheme.secondary,
               ),
             ),
             const SizedBox(height: 4.0),

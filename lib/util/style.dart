@@ -12,9 +12,11 @@ class Style {
   );
 
   static final ThemeData light = ThemeData(
-    brightness: Brightness.light,
-    primaryColor: lightPrimaryColor,
-    accentColor: lightAccentColor,
+    colorScheme: const ColorScheme.light(
+      primary: lightPrimaryColor,
+      secondary: lightAccentColor,
+      brightness: Brightness.light,
+    ),
     pageTransitionsTheme: _pageTransitionsTheme,
     textTheme: GoogleFonts.rubikTextTheme(ThemeData.light().textTheme),
     popupMenuTheme: PopupMenuThemeData(
@@ -25,9 +27,11 @@ class Style {
   );
 
   static final ThemeData dark = ThemeData(
-    brightness: Brightness.dark,
-    primaryColor: darkPrimaryColor,
-    accentColor: darkAccentColor,
+    colorScheme: const ColorScheme.dark(
+      primary: darkPrimaryColor,
+      secondary: darkAccentColor,
+      brightness: Brightness.dark,
+    ),
     canvasColor: darkCanvasColor,
     scaffoldBackgroundColor: darkBackgroundColor,
     cardColor: darkCardColor,
@@ -43,9 +47,11 @@ class Style {
   );
 
   static final ThemeData black = ThemeData(
-    brightness: Brightness.dark,
-    primaryColor: blackPrimaryColor,
-    accentColor: blackAccentColor,
+    colorScheme: const ColorScheme.dark(
+      primary: blackPrimaryColor,
+      secondary: blackAccentColor,
+      brightness: Brightness.dark,
+    ),
     canvasColor: blackPrimaryColor,
     scaffoldBackgroundColor: blackPrimaryColor,
     cardColor: blackPrimaryColor,

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:the_movie_db_flutter/ui/widgets/index.dart';
 
 import '../../util/index.dart';
 import '../tabs/movies/index.dart';
@@ -45,18 +46,7 @@ class HomeMovieScreen extends StatelessWidget {
       valueListenable: _currentIndex,
       builder: (BuildContext context, int currentIndex, Widget? widgetValue) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: darkAccentColor,
-            title: SizedBox(
-              height: 50,
-              width: 50,
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: SvgPicture.asset("assets/icons/app_icon.svg"),
-              ),
-            ),
-            centerTitle: true,
-          ),
+          appBar: const CustomAppBar(),
           body: tabs[currentIndex],
           bottomNavigationBar: ConvexAppBar(
             color: Colors.grey,
