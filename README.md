@@ -1,4 +1,4 @@
-# the_movie_db_flutter
+# The Movie DB App with Flutter BLoC
 
 Flutter TheMovieDB Application with Business Logic Component (BLoC)
 
