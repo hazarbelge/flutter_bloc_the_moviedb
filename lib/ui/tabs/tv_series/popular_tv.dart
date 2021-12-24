@@ -30,28 +30,26 @@ class PopularTvSeriesTab extends StatelessWidget {
                 itemCount: _popular.results!.length,
                 itemExtent: Get.context?.width ?? Get.width / 1.75,
                 itemBuilder: (BuildContext context, int index) => CardListTvSeries(
-                    image: 'https://image.tmdb.org/t/p/w185${_popular.results![index].posterPath}',
-                    title: _popular.results![index].name,
-                    vote: _popular.results![index].voteAverage ?? 0.toString(),
-                    releaseDate: _popular.results![index].firstAirDate ?? "",
-                    overview: _popular.results![index].overview ?? "",
-                    genre: _popular.results![index].genreIds!.take(3).map(createGenreContainer).toList(),
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        DetailPage.route,
-                        arguments: <String, dynamic>{
-                          'title': _popular.results![index].name,
-                          'imagePoster': 'https://image.tmdb.org/t/p/w185${_popular.results![index].posterPath}',
-                          'rating': double.parse(_popular.results![index].voteAverage ?? 0.toString()),
-                          'imageBanner': 'https://image.tmdb.org/t/p/original${_popular.results![index].backdropPath}',
-                          'genre': _popular.results![index].genreIds != null ? _popular.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
-                          'overview': _popular.results![index].overview,
-                          'movieId': _popular.results![index].id,
-                          'isMovie': false,
-                        },
-                      );
-                    }),
+                  image: 'https://image.tmdb.org/t/p/w185${_popular.results![index].posterPath}',
+                  title: _popular.results![index].name,
+                  vote: _popular.results![index].voteAverage ?? 0.toString(),
+                  releaseDate: _popular.results![index].firstAirDate ?? "",
+                  overview: _popular.results![index].overview ?? "",
+                  genre: _popular.results![index].genreIds!.take(3).map(createGenreContainer).toList(),
+                  onTap: () => Get.toNamed(
+                    DetailPage.route,
+                    arguments: <String, dynamic>{
+                      'title': _popular.results![index].name,
+                      'imagePoster': 'https://image.tmdb.org/t/p/w185${_popular.results![index].posterPath}',
+                      'rating': double.parse(_popular.results![index].voteAverage ?? 0.toString()),
+                      'imageBanner': 'https://image.tmdb.org/t/p/original${_popular.results![index].backdropPath}',
+                      'genre': _popular.results![index].genreIds != null ? _popular.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
+                      'overview': _popular.results![index].overview,
+                      'movieId': _popular.results![index].id,
+                      'isMovie': false,
+                    },
+                  ),
+                ),
               ),
             ),
           );

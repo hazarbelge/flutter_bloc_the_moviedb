@@ -36,22 +36,19 @@ class TopRatedTvSeriesTab extends StatelessWidget {
                   releaseDate: _topRated.results![index].firstAirDate ?? "",
                   overview: _topRated.results![index].overview ?? "",
                   genre: _topRated.results![index].genreIds!.take(3).map(createGenreContainer).toList(),
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      DetailPage.route,
-                      arguments: <String, dynamic>{
-                        'title': _topRated.results![index].name,
-                        'imagePoster': 'https://image.tmdb.org/t/p/w185${_topRated.results![index].posterPath}',
-                        'rating': double.parse(_topRated.results![index].voteAverage ?? 0.toString()),
-                        'imageBanner': 'https://image.tmdb.org/t/p/original${_topRated.results![index].backdropPath}',
-                        'genre': _topRated.results![index].genreIds != null ? _topRated.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
-                        'overview': _topRated.results![index].overview,
-                        'movieId': _topRated.results![index].id,
-                        'isMovie': false,
-                      },
-                    );
-                  },
+                  onTap: () => Get.toNamed(
+                    DetailPage.route,
+                    arguments: <String, dynamic>{
+                      'title': _topRated.results![index].name,
+                      'imagePoster': 'https://image.tmdb.org/t/p/w185${_topRated.results![index].posterPath}',
+                      'rating': double.parse(_topRated.results![index].voteAverage ?? 0.toString()),
+                      'imageBanner': 'https://image.tmdb.org/t/p/original${_topRated.results![index].backdropPath}',
+                      'genre': _topRated.results![index].genreIds != null ? _topRated.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
+                      'overview': _topRated.results![index].overview,
+                      'movieId': _topRated.results![index].id,
+                      'isMovie': false,
+                    },
+                  ),
                 ),
               ),
             ),

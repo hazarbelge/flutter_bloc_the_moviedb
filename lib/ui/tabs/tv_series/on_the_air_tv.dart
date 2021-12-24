@@ -30,28 +30,26 @@ class OnTheAirTvSeriesTab extends StatelessWidget {
                 itemCount: _onTheAir.results!.length,
                 itemExtent: Get.context?.width ?? Get.width / 1.75,
                 itemBuilder: (BuildContext context, int index) => CardListTvSeries(
-                    image: 'https://image.tmdb.org/t/p/w185${_onTheAir.results![index].posterPath}',
-                    title: _onTheAir.results![index].name,
-                    vote: _onTheAir.results![index].voteAverage ?? 0.toString(),
-                    releaseDate: _onTheAir.results![index].firstAirDate ?? "",
-                    overview: _onTheAir.results![index].overview ?? "",
-                    genre: _onTheAir.results![index].genreIds!.take(3).map(createGenreContainer).toList(),
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        DetailPage.route,
-                        arguments: <String, dynamic>{
-                          'title': _onTheAir.results![index].name,
-                          'imagePoster': 'https://image.tmdb.org/t/p/w185${_onTheAir.results![index].posterPath}',
-                          'rating': double.parse(_onTheAir.results![index].voteAverage ?? 0.toString()),
-                          'imageBanner': 'https://image.tmdb.org/t/p/original${_onTheAir.results![index].backdropPath}',
-                          'genre': _onTheAir.results![index].genreIds != null ? _onTheAir.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
-                          'overview': _onTheAir.results![index].overview,
-                          'movieId': _onTheAir.results![index].id,
-                          'isMovie': false,
-                        },
-                      );
-                    }),
+                  image: 'https://image.tmdb.org/t/p/w185${_onTheAir.results![index].posterPath}',
+                  title: _onTheAir.results![index].name,
+                  vote: _onTheAir.results![index].voteAverage ?? 0.toString(),
+                  releaseDate: _onTheAir.results![index].firstAirDate ?? "",
+                  overview: _onTheAir.results![index].overview ?? "",
+                  genre: _onTheAir.results![index].genreIds!.take(3).map(createGenreContainer).toList(),
+                  onTap: () => Get.toNamed(
+                    DetailPage.route,
+                    arguments: <String, dynamic>{
+                      'title': _onTheAir.results![index].name,
+                      'imagePoster': 'https://image.tmdb.org/t/p/w185${_onTheAir.results![index].posterPath}',
+                      'rating': double.parse(_onTheAir.results![index].voteAverage ?? 0.toString()),
+                      'imageBanner': 'https://image.tmdb.org/t/p/original${_onTheAir.results![index].backdropPath}',
+                      'genre': _onTheAir.results![index].genreIds != null ? _onTheAir.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
+                      'overview': _onTheAir.results![index].overview,
+                      'movieId': _onTheAir.results![index].id,
+                      'isMovie': false,
+                    },
+                  ),
+                ),
               ),
             ),
           );

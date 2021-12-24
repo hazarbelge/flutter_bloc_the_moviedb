@@ -5,8 +5,8 @@ import 'package:the_movie_db_flutter/cubits/base/request_state.dart';
 import 'package:the_movie_db_flutter/cubits/index.dart';
 import 'package:the_movie_db_flutter/models/index.dart';
 import 'package:the_movie_db_flutter/repositories/index.dart';
-import 'package:the_movie_db_flutter/ui/widgets/index.dart';
 import 'package:the_movie_db_flutter/ui/pages/index.dart';
+import 'package:the_movie_db_flutter/ui/widgets/index.dart';
 
 class PopularMoviesTab extends StatelessWidget {
   const PopularMoviesTab({Key? key}) : super(key: key);
@@ -36,22 +36,19 @@ class PopularMoviesTab extends StatelessWidget {
                   releaseDate: _popular.results![index].releaseDate,
                   overview: _popular.results![index].overview,
                   genre: _popular.results![index].genreIds.take(3).map(createGenreContainer).toList(),
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      DetailPage.route,
-                      arguments: <String, dynamic>{
-                        'title': _popular.results![index].title,
-                        'imagePoster': 'https://image.tmdb.org/t/p/w185${_popular.results![index].posterPath}',
-                        'rating': double.parse(_popular.results![index].voteAverage),
-                        'imageBanner': 'https://image.tmdb.org/t/p/original${_popular.results![index].backdropPath}',
-                        'genre': _popular.results![index].genreIds.take(3).map(createGenreContainer).toList(),
-                        'overview': _popular.results![index].overview,
-                        'movieId': _popular.results![index].id,
-                        'isMovie': true,
-                      },
-                    );
-                  },
+                  onTap: () => Get.toNamed(
+                    DetailPage.route,
+                    arguments: <String, dynamic>{
+                      'title': _popular.results![index].title,
+                      'imagePoster': 'https://image.tmdb.org/t/p/w185${_popular.results![index].posterPath}',
+                      'rating': double.parse(_popular.results![index].voteAverage),
+                      'imageBanner': 'https://image.tmdb.org/t/p/original${_popular.results![index].backdropPath}',
+                      'genre': _popular.results![index].genreIds.take(3).map(createGenreContainer).toList(),
+                      'overview': _popular.results![index].overview,
+                      'movieId': _popular.results![index].id,
+                      'isMovie': true,
+                    },
+                  ),
                 ),
               ),
             ),

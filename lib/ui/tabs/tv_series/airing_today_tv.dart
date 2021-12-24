@@ -30,28 +30,26 @@ class AiringTodayTvSeriesTab extends StatelessWidget {
                 itemCount: _airingToday.results!.length,
                 itemExtent: Get.context?.width ?? Get.width / 1.75,
                 itemBuilder: (BuildContext context, int index) => CardListTvSeries(
-                    image: 'https://image.tmdb.org/t/p/w185${_airingToday.results![index].posterPath}',
-                    title: _airingToday.results![index].name,
-                    vote: _airingToday.results![index].voteAverage ?? 0.toString(),
-                    releaseDate: _airingToday.results![index].firstAirDate ?? "",
-                    overview: _airingToday.results![index].overview ?? "",
-                    genre: _airingToday.results![index].genreIds!.take(3).map(createGenreContainer).toList(),
-                    onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        DetailPage.route,
-                        arguments: <String, dynamic>{
-                          'title': _airingToday.results![index].name,
-                          'imagePoster': 'https://image.tmdb.org/t/p/w185${_airingToday.results![index].posterPath}',
-                          'rating': double.parse(_airingToday.results![index].voteAverage ?? 0.toString()),
-                          'imageBanner': 'https://image.tmdb.org/t/p/original${_airingToday.results![index].backdropPath}',
-                          'genre': _airingToday.results![index].genreIds != null ? _airingToday.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
-                          'overview': _airingToday.results![index].overview,
-                          'movieId': _airingToday.results![index].id,
-                          'isMovie': false,
-                        },
-                      );
-                    }),
+                  image: 'https://image.tmdb.org/t/p/w185${_airingToday.results![index].posterPath}',
+                  title: _airingToday.results![index].name,
+                  vote: _airingToday.results![index].voteAverage ?? 0.toString(),
+                  releaseDate: _airingToday.results![index].firstAirDate ?? "",
+                  overview: _airingToday.results![index].overview ?? "",
+                  genre: _airingToday.results![index].genreIds!.take(3).map(createGenreContainer).toList(),
+                  onTap: () => Get.toNamed(
+                    DetailPage.route,
+                    arguments: <String, dynamic>{
+                      'title': _airingToday.results![index].name,
+                      'imagePoster': 'https://image.tmdb.org/t/p/w185${_airingToday.results![index].posterPath}',
+                      'rating': double.parse(_airingToday.results![index].voteAverage ?? 0.toString()),
+                      'imageBanner': 'https://image.tmdb.org/t/p/original${_airingToday.results![index].backdropPath}',
+                      'genre': _airingToday.results![index].genreIds != null ? _airingToday.results![index].genreIds!.take(3).map(createGenreContainer).toList() : const SizedBox(),
+                      'overview': _airingToday.results![index].overview,
+                      'movieId': _airingToday.results![index].id,
+                      'isMovie': false,
+                    },
+                  ),
+                ),
               ),
             ),
           );

@@ -36,22 +36,19 @@ class NowPlayingMoviesTab extends StatelessWidget {
                   releaseDate: _nowPlaying.results![index].releaseDate,
                   overview: _nowPlaying.results![index].overview,
                   genre: _nowPlaying.results![index].genreIds.take(3).map(createGenreContainer).toList(),
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      DetailPage.route,
-                      arguments: <String, dynamic>{
-                        'title': _nowPlaying.results![index].title,
-                        'imagePoster': 'https://image.tmdb.org/t/p/w185${_nowPlaying.results![index].posterPath}',
-                        'rating': double.parse(_nowPlaying.results![index].voteAverage),
-                        'imageBanner': 'https://image.tmdb.org/t/p/original${_nowPlaying.results![index].backdropPath}',
-                        'genre': _nowPlaying.results![index].genreIds.take(3).map(createGenreContainer).toList(),
-                        'overview': _nowPlaying.results![index].overview,
-                        'movieId': _nowPlaying.results![index].id,
-                        'isMovie': true,
-                      },
-                    );
-                  },
+                  onTap: () => Get.toNamed(
+                    DetailPage.route,
+                    arguments: <String, dynamic>{
+                      'title': _nowPlaying.results![index].title,
+                      'imagePoster': 'https://image.tmdb.org/t/p/w185${_nowPlaying.results![index].posterPath}',
+                      'rating': double.parse(_nowPlaying.results![index].voteAverage),
+                      'imageBanner': 'https://image.tmdb.org/t/p/original${_nowPlaying.results![index].backdropPath}',
+                      'genre': _nowPlaying.results![index].genreIds.take(3).map(createGenreContainer).toList(),
+                      'overview': _nowPlaying.results![index].overview,
+                      'movieId': _nowPlaying.results![index].id,
+                      'isMovie': true,
+                    },
+                  ),
                 ),
               ),
             ),

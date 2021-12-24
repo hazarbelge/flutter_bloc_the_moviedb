@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:the_movie_db_flutter/cubits/base/request_state.dart';
 import 'package:the_movie_db_flutter/cubits/session_id.dart';
 import 'package:the_movie_db_flutter/models/index.dart';
@@ -61,12 +62,7 @@ class StartScreen extends StatelessWidget {
                           width: 150,
                           child: TextButton(
                             style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) => darkAccentColor)),
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                HomeMovieScreen.route,
-                              );
-                            },
+                            onPressed: () => Get.toNamed(HomeMovieScreen.route),
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
@@ -82,12 +78,7 @@ class StartScreen extends StatelessWidget {
                           width: 150,
                           child: TextButton(
                             style: ButtonStyle(backgroundColor: MaterialStateColor.resolveWith((Set<MaterialState> states) => darkAccentColor)),
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                HomeTvScreen.route,
-                              );
-                            },
+                            onPressed: () => Get.toNamed(HomeTvScreen.route),
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
