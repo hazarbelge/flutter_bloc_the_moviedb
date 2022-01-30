@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:the_movie_db_flutter/util/index.dart';
 
 class ProductCard extends StatelessWidget {
@@ -174,9 +173,9 @@ class CardListMovieDescSide extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     '${(double.parse(vote) * 10.0).floor()}%',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 11.sp,
+                                      fontSize: 11,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -200,7 +199,10 @@ class CardListMovieDescSide extends StatelessWidget {
                               child: Text(
                                 title,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.sp),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
                                 maxLines: 1,
                               ),
                             ),
@@ -211,7 +213,11 @@ class CardListMovieDescSide extends StatelessWidget {
                                 fit: BoxFit.scaleDown,
                                 child: Text(
                                   releaseDate,
-                                  style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.w300, fontSize: 11.sp),
+                                  style: TextStyle(
+                                    color: Colors.grey[800],
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 11,
+                                  ),
                                   maxLines: 1,
                                 ),
                               ),
@@ -259,9 +265,9 @@ class CardListMovieDescSide extends StatelessWidget {
                             overview,
                             maxLines: boxConstraints.maxHeight ~/ 14,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
-                              fontSize: 11.sp,
+                              fontSize: 11,
                             ),
                             textAlign: TextAlign.start,
                           ),

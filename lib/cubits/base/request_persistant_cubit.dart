@@ -2,7 +2,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:the_movie_db_flutter/cubits/index.dart';
 import 'package:the_movie_db_flutter/repositories/index.dart';
 
-abstract class RequestPersistantCubit<R extends BaseRepository, T> extends RequestCubit<R, T> with HydratedMixin {
+abstract class RequestPersistantCubit<R extends BaseRepository, T> extends RequestCubit<R, T> with HydratedMixin<RequestState<T>> {
   RequestPersistantCubit(R repository) : super(repository) {
     hydrate();
   }
