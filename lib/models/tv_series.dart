@@ -10,7 +10,7 @@ class TvSeriesWrapper {
 
   factory TvSeriesWrapper.fromRawJson(String str) => TvSeriesWrapper.fromJson(json.decode(str));
 
-  factory TvSeriesWrapper.fromJson(Map<String, dynamic> json) {
+  factory TvSeriesWrapper.fromJson(Map<String?, dynamic> json) {
     return TvSeriesWrapper(
       page: json['page'],
       totalResults: json['total_results'],
@@ -27,11 +27,11 @@ class TvSeriesWrapper {
   String toRawJson() => json.encode(toJson());
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    "page": page,
-    "total_results": totalResults,
-    "total_pages": totalPages,
-    "results": results != null ? List<TvSeries>.from(results!.map((TvSeries x) => x.toJson())) : null,
-  };
+        "page": page,
+        "total_results": totalResults,
+        "total_pages": totalPages,
+        "results": results != null ? List<TvSeries>.from(results!.map((TvSeries x) => x.toJson())) : null,
+      };
 }
 
 class TvSeries {
@@ -88,18 +88,18 @@ class TvSeries {
   String toRawJson() => json.encode(toJson());
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    "poster_path": posterPath,
-    "popularity": popularity,
-    "id": id,
-    "backdrop_path": backdropPath,
-    "vote_average": voteAverage,
-    "overview": overview,
-    "first_air_date": firstAirDate,
-    "origin_country": originCountry != null ? List<dynamic>.from(originCountry!.map((String x) => x)) : null,
-    "genre_ids": genreIds != null ? List<dynamic>.from(genreIds!.map((int x) => x)) : null,
-    "original_language": originalLanguage,
-    "vote_count": voteCount,
-    "name": name,
-    "original_name": originalName,
-  };
+        "poster_path": posterPath,
+        "popularity": popularity,
+        "id": id,
+        "backdrop_path": backdropPath,
+        "vote_average": voteAverage,
+        "overview": overview,
+        "first_air_date": firstAirDate,
+        "origin_country": originCountry != null ? List<dynamic>.from(originCountry!.map((String x) => x)) : null,
+        "genre_ids": genreIds != null ? List<dynamic>.from(genreIds!.map((int x) => x)) : null,
+        "original_language": originalLanguage,
+        "vote_count": voteCount,
+        "name": name,
+        "original_name": originalName,
+      };
 }
