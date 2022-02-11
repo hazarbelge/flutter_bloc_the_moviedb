@@ -1,24 +1,26 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
-import '../models/index.dart';
-import '../services/index.dart';
-import 'index.dart';
+import 'package:the_movie_db_flutter/models/index.dart';
+import 'package:the_movie_db_flutter/repositories/index.dart';
+import 'package:the_movie_db_flutter/services/index.dart';
 
 class MoviesRepository extends BaseRepository<MoviesService, Map<String, MovieWrapper>> {
   MoviesRepository(MoviesService service) : super(service);
 
   @override
   Future<Map<String, MovieWrapper>> fetchData() async {
-    final Response<dynamic> nowPlayingResponse = await service.getNowPlayingMovies();
-    final Response<dynamic> popularResponse = await service.getPopularMovies();
-    final Response<dynamic> topRatedResponse = await service.getTopRatedMovies();
-    final Response<dynamic> upcomingResponse = await service.getUpcomingMovies();
+    late final Response<dynamic> nowPlayingResponse, popularResponse, topRatedResponse, upcomingResponse;
 
-    late final MovieWrapper nowPlayingWrapper;
-    late final MovieWrapper popularWrapper;
-    late final MovieWrapper topRatedWrapper;
-    late final MovieWrapper upcomingWrapper;
+    await Future.wait(
+      <Future<dynamic>>[
+        service.getNowPlayingMovies().then((Response<dynamic> value) => nowPlayingResponse = value),
+        service.getPopularMovies().then((Response<dynamic> value) => popularResponse = value),
+        service.getTopRatedMovies().then((Response<dynamic> value) => topRatedResponse = value),
+        service.getUpcomingMovies().then((Response<dynamic> value) => upcomingResponse = value),
+      ],
+    );
+
+    late final MovieWrapper nowPlayingWrapper, popularWrapper, topRatedWrapper, upcomingWrapper;
 
     await Future.wait(
       <Future<dynamic>>[

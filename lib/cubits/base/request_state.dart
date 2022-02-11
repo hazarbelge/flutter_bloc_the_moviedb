@@ -1,10 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
 enum RequestStatus { init, loading, loaded, error }
 
 @immutable
-class RequestState<T> extends Equatable {
+class RequestState<T> {
   const RequestState._({
     required this.status,
     this.value,
@@ -53,13 +52,6 @@ class RequestState<T> extends Equatable {
       'errorMessage': errorMessage,
     };
   }
-
-  @override
-  List<Object> get props => <Object>[
-        status.index,
-        value.toString(),
-        errorMessage.toString(),
-      ];
 
   @override
   String toString() => '($status: $value, $errorMessage)';

@@ -2,10 +2,10 @@ import 'dart:convert';
 
 class TvSeriesWrapper {
   const TvSeriesWrapper({
-    this.page,
-    this.totalResults,
-    this.totalPages,
-    this.results,
+    required this.page,
+    required this.totalResults,
+    required this.totalPages,
+    required this.results,
   });
 
   factory TvSeriesWrapper.fromRawJson(String str) => TvSeriesWrapper.fromJson(json.decode(str));
@@ -19,23 +19,14 @@ class TvSeriesWrapper {
     );
   }
 
-  final int? page;
-  final int? totalResults;
-  final int? totalPages;
+  final int page;
+  final int totalResults;
+  final int totalPages;
   final List<TvSeries>? results;
-
-  String toRawJson() => json.encode(toJson());
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        "page": page,
-        "total_results": totalResults,
-        "total_pages": totalPages,
-        "results": results != null ? List<TvSeries>.from(results!.map((TvSeries x) => x.toJson())) : null,
-      };
 }
 
 class TvSeries {
-  TvSeries({
+  const TvSeries({
     required this.id,
     this.posterPath,
     required this.popularity,

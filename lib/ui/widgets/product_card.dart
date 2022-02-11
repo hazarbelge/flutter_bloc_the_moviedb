@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:the_movie_db_flutter/util/index.dart';
 
@@ -83,13 +84,16 @@ class CardListMovieImageSide extends StatelessWidget {
       padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Image.network(
-          image,
+        child: CachedNetworkImage(
+          imageUrl: image,
           fit: BoxFit.fill,
           height: cardHeight - 20,
-          errorBuilder: (BuildContext context, Object object, StackTrace? stackTrace) {
-            return const SizedBox();
-          },
+          placeholder: (BuildContext context, String url) => Container(
+            height: cardHeight - 20,
+            width: 110,
+            color: Colors.grey.shade600,
+          ),
+          errorWidget: (BuildContext context, String url, dynamic error) => const Icon(Icons.error),
         ),
       ),
     );

@@ -1,24 +1,26 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
-import '../models/index.dart';
-import '../services/index.dart';
-import 'index.dart';
+import 'package:the_movie_db_flutter/models/index.dart';
+import 'package:the_movie_db_flutter/repositories/index.dart';
+import 'package:the_movie_db_flutter/services/index.dart';
 
 class TvSeriesRepository extends BaseRepository<TvSeriesService, Map<String, TvSeriesWrapper>> {
   TvSeriesRepository(TvSeriesService service) : super(service);
 
   @override
   Future<Map<String, TvSeriesWrapper>> fetchData() async {
-    final Response<dynamic> airingTodayResponse = await service.getAiringTodayTvSeries();
-    final Response<dynamic> onTheAirResponse = await service.getOnTheAirTvSeries();
-    final Response<dynamic> popularResponse = await service.getPopularTvSeries();
-    final Response<dynamic> topRatedResponse = await service.getTopRatedTvSeries();
+    late final Response<dynamic> airingTodayResponse, onTheAirResponse, popularResponse, topRatedResponse;
 
-    late final TvSeriesWrapper airingTodayWrapper;
-    late final TvSeriesWrapper onTheAirWrapper;
-    late final TvSeriesWrapper popularWrapper;
-    late final TvSeriesWrapper topRatedWrapper;
+    await Future.wait(
+      <Future<dynamic>>[
+        service.getAiringTodayTvSeries().then((Response<dynamic> value) => airingTodayResponse = value),
+        service.getOnTheAirTvSeries().then((Response<dynamic> value) => onTheAirResponse = value),
+        service.getPopularTvSeries().then((Response<dynamic> value) => popularResponse = value),
+        service.getTopRatedTvSeries().then((Response<dynamic> value) => topRatedResponse = value),
+      ],
+    );
+
+    late final TvSeriesWrapper airingTodayWrapper, onTheAirWrapper, popularWrapper, topRatedWrapper;
 
     await Future.wait(
       <Future<dynamic>>[

@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'package:equatable/equatable.dart';
 
-class SessionId extends Equatable {
+class SessionId {
   const SessionId({
     required this.success,
     required this.guestSessionId,
@@ -27,10 +26,4 @@ class SessionId extends Equatable {
         "guest_session_id": guestSessionId,
         "expires_at": expiresAt,
       };
-
-  @override
-  List<Object> get props => <Object>[
-        success,
-        guestSessionId,
-      ];
 }
